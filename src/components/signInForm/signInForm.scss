@@ -1,0 +1,147 @@
+@import '../../main';
+
+.container{
+  height: 100%;
+}
+
+.form {
+    max-width: 24rem;
+    padding: 1.5rem 2rem 2rem;
+    background-color: white;
+    height: 100%;
+    &__avatar__wrapper {
+      width: 7rem;
+      display: flex;
+      justify-content: center;
+      margin: 0 auto;
+    }
+    &__avatar {
+      width: 5rem;
+      padding: 0.5rem 0 2rem;
+    }
+    &__reg_logo {
+      width: 5rem;
+      padding-bottom: 1rem;
+    }
+    &__title {
+      margin-bottom: 0.5rem;
+    }
+  
+    &__description {
+      margin-bottom: 2rem;
+      font-size: 1.5rem;
+      text-align: center;
+      line-height: 1.2;
+      min-height: 3.7rem;
+      text-transform: capitalize;
+    }
+  
+    &__group {
+      position: relative;
+      height: 3rem;
+    }
+    &__password {
+      position: relative;
+      height: 3rem;
+    }
+    &__login {
+      position: relative;
+      height: 3rem;
+    }
+  
+    &__input {
+      width: 100%;
+      height: 100%;
+      border: 2px solid $clr-grey-2;
+      border-radius: 0.5rem;
+      font-family: inherit;
+      font-weight: inherit;
+      color: inherit;
+      outline: none;
+      padding: 1.25rem;
+      background: none;
+      &.errorInput {
+        border-color: $clr-red-dark;
+      }
+      &#password {
+        padding-right: 35px;
+      }
+  
+      &:hover {
+        border-color: $clr-primary;
+      }
+  
+      &:focus {
+        border-color: $clr-primary-dark;
+      }
+    }
+  
+    &__label {
+      position: absolute;
+      left: 1rem;
+      top: 0.5rem;
+      padding: 0 0.5rem;
+      background-color: white;
+      transition:
+        top 200ms ease-in,
+        left 200ms ease-in,
+        font-size 200ms ease-in;
+    }
+  
+    &__buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 5rem;
+      & a {
+        cursor: pointer;
+      }
+      & a:hover {
+        transition: 0.3s;
+        border-bottom: 2px solid $clr-primary-hover;
+      }
+    }
+    &__signInButtons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 5rem;
+      & a {
+        cursor: pointer;
+      }
+      & a:hover {
+        transition: 0.3s;
+        border-bottom: 2px solid $clr-primary-hover;
+      }
+    }
+  
+    &__button {
+      display: block;
+      margin-left: 1rem;
+      padding: 0.75rem 2rem;
+      background-color: $clr-primary;
+      font-family: inherit;
+      font-weight: inherit;
+      border-radius: 0.5rem;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      transition: background-color 200ms ease-in;
+  
+      &:hover {
+        background-color: $clr-primary-dark;
+      }
+    }
+    .error {
+      padding-top: 5px;
+      color: black;
+    }
+  }
+  
+  .form__input:focus ~ .form__label,
+  .form__input:not(:placeholder-shown).form__input:not(:focus) ~ .form__label {
+    top: -0.5rem;
+    left: 0.8rem;
+    font-size: 0.8rem;
+  }
+  
