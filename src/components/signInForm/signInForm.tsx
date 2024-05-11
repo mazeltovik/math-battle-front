@@ -14,7 +14,7 @@ import PasswordInput from '../../components/passwordInput/passwordInput';
 import SubmitPanel from '../submitPanel/submitPanel';
 //React
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 //Hooks
 
 //Helpers

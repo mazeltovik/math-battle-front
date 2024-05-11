@@ -12,7 +12,6 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 //Components
 import SignInForm from '../../components/signInForm/signInForm';
 import SignUpForm from '../../components/signUpForm/signUpForm';
-import SubmitPanel from '../../components/submitPanel/submitPanel';
 //React
 import { useState } from 'react';
 //Hooks
