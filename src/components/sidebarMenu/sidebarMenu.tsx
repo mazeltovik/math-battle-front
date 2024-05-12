@@ -14,6 +14,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 //Components
 
 //React
@@ -61,6 +62,14 @@ export default function SidebarMenu({}: sidebarMenuTypes) {
               <SearchIcon />
             </span>
             <span className="text">Search</span>
+          </a>
+        </li>
+        <li className="list">
+          <a href="#">
+            <span className="icon">
+              <MeetingRoomIcon/>
+            </span>
+            <span className="text">Create</span>
           </a>
         </li>
         <li className="list">
