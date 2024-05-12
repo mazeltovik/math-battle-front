@@ -1,0 +1,12 @@
+@import '../../main';
+
+.main-wrapper {
+  display: grid;
+  grid-template-columns: 0.3fr 1fr;
+}
+
+@media (min-width: 320px) and (max-width: 450px) {
+  .main-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
