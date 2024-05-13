@@ -32,28 +32,28 @@ export default function SidebarMenu({}: sidebarMenuTypes) {
   let location = useLocation();
   const { active, setActive } = useSidebar();
   const menuParentRef = useRef<HTMLUListElement>(null);
-  useEffect(()=>{
-    const {pathname} = location;
+  useEffect(() => {
+    const { pathname } = location;
     const childs = menuParentRef.current?.children;
-    if(childs){
+    if (childs) {
       const arrOfChilds = Array.from(childs);
-      arrOfChilds.forEach((item)=>{
-        if(item.classList.contains(pathname)){
+      arrOfChilds.forEach((item) => {
+        if (item.classList.contains(pathname)) {
           item.classList.add('active');
         }
-      })
+      });
     }
     return () => {
-      if(childs){
+      if (childs) {
         const arrOfChilds = Array.from(childs);
-          arrOfChilds.forEach((item) => {
-            if (item.classList.contains('active')) {
-              item.classList.remove('active');
-            }
-          });
+        arrOfChilds.forEach((item) => {
+          if (item.classList.contains('active')) {
+            item.classList.remove('active');
+          }
+        });
       }
-    }
-  },[location])
+    };
+  }, [location]);
   return (
     <div className={active ? 'navigation active' : 'navigation'}>
       <div
@@ -74,50 +74,50 @@ export default function SidebarMenu({}: sidebarMenuTypes) {
       <ul ref={menuParentRef} onClick={menuItemHandler(active, setActive)}>
         <li className="list /">
           <NavLink to="/">
-          <span className="icon">
-                <HomeIcon />
-              </span>
-              <span className="text">Home</span>
+            <span className="icon">
+              <HomeIcon />
+            </span>
+            <span className="text">Home</span>
           </NavLink>
         </li>
         <li className="list /search">
           <NavLink to="/search">
             <span className="icon">
-                <SearchIcon />
-              </span>
-              <span className="text">Search</span>
+              <SearchIcon />
+            </span>
+            <span className="text">Search</span>
           </NavLink>
         </li>
         <li className="list /create">
           <NavLink to="/create">
-          <span className="icon">
-                <MeetingRoomIcon />
-              </span>
-              <span className="text">Create</span>
+            <span className="icon">
+              <MeetingRoomIcon />
+            </span>
+            <span className="text">Create</span>
           </NavLink>
         </li>
         <li className="list /achievements">
           <NavLink to="/achievements">
-          <span className="icon">
-                <EmojiEventsIcon />
-              </span>
-              <span className="text">Achievements</span>
+            <span className="icon">
+              <EmojiEventsIcon />
+            </span>
+            <span className="text">Achievements</span>
           </NavLink>
         </li>
         <li className="list /settings">
           <NavLink to="/settings">
-          <span className="icon">
-                <SettingsSuggestIcon />
-              </span>
-              <span className="text">Setting</span>
+            <span className="icon">
+              <SettingsSuggestIcon />
+            </span>
+            <span className="text">Setting</span>
           </NavLink>
         </li>
         <li className="list /author">
           <NavLink to="/author">
-          <span className="icon">
-                <PersonIcon />
-              </span>
-              <span className="text">Author</span>
+            <span className="icon">
+              <PersonIcon />
+            </span>
+            <span className="text">Author</span>
           </NavLink>
         </li>
       </ul>

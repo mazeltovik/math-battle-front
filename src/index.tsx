@@ -4,6 +4,7 @@ import Wrapper from './components/routerWrapper/routerWrapper';
 import { App } from './app';
 import AuthPage from './pages/authPage/authPage';
 import { SidebarProvider } from './contexts/sidebarContext';
+import CountdownTimer from './components/countdownTimer/countdownTimer';
 import React from 'react';
 
 const router = createBrowserRouter([
@@ -69,7 +70,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'auth',
-    element: <AuthPage/>,
+    element: <AuthPage />,
   },
 ]);
 

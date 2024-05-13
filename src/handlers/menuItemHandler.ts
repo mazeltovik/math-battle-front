@@ -3,8 +3,8 @@ export default function menuItemHandler(
   callback: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   return function () {
-    if(active){
-      callback(false)
+    if (active) {
+      callback(false);
     } else return;
   };
 }
