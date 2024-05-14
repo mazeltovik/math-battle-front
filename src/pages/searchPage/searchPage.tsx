@@ -22,12 +22,12 @@ import { socket } from '../../socket/socket';
 
 export default function SearchPage(){
     useEffect(()=>{
-        socket.on('connect',()=>{
-            socket.emit('showRooms', { name: 'Nest' });
-        })
         socket.on('showRooms', (data) => console.log(data))
     },[])
     return (
-        <p onClick={()=>socket.emit('showRooms', { name: 'Nest' })}>Search Page</p>
+        <p onClick={()=>{
+            socket.emit('showRooms', { name: 'Nest', id:socket.id })
+        }
+    }>Search Page</p>
     )
 }

@@ -16,23 +16,34 @@ import SubmitPanel from '../submitPanel/submitPanel';
 //React
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 //Hooks
-
+import useSocket from '../../hooks/useSocket';
 //Helpers
-
+import axios from 'axios';
 //Handlers
 
 export default function SignUpForm() {
   const [showNameErr, setShowNameErr] = useState<boolean>(false);
   const [showLoginErr, setShowLoginErr] = useState<boolean>(false);
   const [showPassErr, setShowPassErr] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const {setIsConnected, socketId} = useSocket();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<SignUpInputs>({ criteriaMode: 'all', mode: 'onChange' });
-  const onSubmit: SubmitHandler<SignUpInputs> = (body) => {
-    console.log(body);
+  const onSubmit: SubmitHandler<SignUpInputs> = async (body) => {
+    if(socketId){
+      const newUser = Object.assign(body,{socketId});
+      const response = await axios.post('http://localhost:3000/user/auth',body);
+      console.log(response.status);
+    if(response.status == 200){
+      console.log(response.data);
+      navigate('/');
+    }
+    }
   };
   return (
     <div className="container">

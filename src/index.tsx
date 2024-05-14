@@ -6,6 +6,7 @@ import AuthPage from './pages/authPage/authPage';
 import SearchPage from './pages/searchPage/searchPage';
 import { SidebarProvider } from './contexts/sidebarContext';
 import CountdownTimer from './components/countdownTimer/countdownTimer';
+import { SocketProvider } from './contexts/socketContext';
 import React from 'react';
 
 const router = createBrowserRouter([
@@ -79,7 +80,9 @@ const container = document.getElementById('root');
 const root = createRoot(container!);
 
 root.render(
-  <SidebarProvider>
-    <RouterProvider router={router} />
-  </SidebarProvider>
+  <SocketProvider>
+      <SidebarProvider>
+      <RouterProvider router={router} />
+    </SidebarProvider>
+  </SocketProvider>
 );

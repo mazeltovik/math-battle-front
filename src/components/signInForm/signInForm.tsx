@@ -18,7 +18,7 @@ import { useState } from 'react';
 //Hooks
 
 //Helpers
-
+import axios from 'axios';
 //Handlers
 
 export default function SignInForm() {
@@ -29,8 +29,9 @@ export default function SignInForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<SignInInputs>({ criteriaMode: 'all', mode: 'onChange' });
-  const onSubmit: SubmitHandler<SignInInputs> = (body) => {
-    console.log(body);
+  const onSubmit: SubmitHandler<SignInInputs> = async (body) => {
+    const response = await axios.post('http://localhost:3000/user/auth',body);
+    console.log(response);
   };
   return (
     <div className="container">
