@@ -1,3 +1,3 @@
-export default function showRooms(data:string[]){
-    console.log('event', data);
+export default function showRooms(data: string[]) {
+  console.log('event', data);
 }

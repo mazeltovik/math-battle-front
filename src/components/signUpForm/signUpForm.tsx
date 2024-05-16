@@ -28,21 +28,24 @@ export default function SignUpForm() {
   const [showLoginErr, setShowLoginErr] = useState<boolean>(false);
   const [showPassErr, setShowPassErr] = useState<boolean>(false);
   const navigate = useNavigate();
-  const {setIsConnected, socketId} = useSocket();
+  const { setIsConnected, socketId } = useSocket();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<SignUpInputs>({ criteriaMode: 'all', mode: 'onChange' });
   const onSubmit: SubmitHandler<SignUpInputs> = async (body) => {
-    if(socketId){
-      const newUser = Object.assign(body,{socketId});
-      const response = await axios.post('http://localhost:3000/user/auth',body);
+    if (socketId) {
+      const newUser = Object.assign(body, { socketId });
+      const response = await axios.post(
+        'http://localhost:3000/user/auth',
+        body
+      );
       console.log(response.status);
-    if(response.status == 200){
-      console.log(response.data);
-      navigate('/');
-    }
+      if (response.status == 200) {
+        console.log(response.data);
+        navigate('/');
+      }
     }
   };
   return (

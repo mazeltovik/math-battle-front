@@ -1,12 +1,15 @@
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { SocketProvider } from './contexts/socketContext';
+import { AlertProvider } from './contexts/alertContext';
+import { SidebarProvider } from './contexts/sidebarContext';
 import Wrapper from './components/routerWrapper/routerWrapper';
 import { App } from './app';
 import AuthPage from './pages/authPage/authPage';
 import SearchPage from './pages/searchPage/searchPage';
-import { SidebarProvider } from './contexts/sidebarContext';
+
 import CountdownTimer from './components/countdownTimer/countdownTimer';
-import { SocketProvider } from './contexts/socketContext';
+
 import React from 'react';
 
 const router = createBrowserRouter([
@@ -26,7 +29,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <SearchPage/>,
+        element: <SearchPage />,
       },
     ],
   },
@@ -80,9 +83,11 @@ const container = document.getElementById('root');
 const root = createRoot(container!);
 
 root.render(
-  <SocketProvider>
+  <AlertProvider>
+    <SocketProvider>
       <SidebarProvider>
-      <RouterProvider router={router} />
-    </SidebarProvider>
-  </SocketProvider>
+        <RouterProvider router={router} />
+      </SidebarProvider>
+    </SocketProvider>
+  </AlertProvider>
 );

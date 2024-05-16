@@ -30,7 +30,7 @@ export default function SignInForm() {
     formState: { errors },
   } = useForm<SignInInputs>({ criteriaMode: 'all', mode: 'onChange' });
   const onSubmit: SubmitHandler<SignInInputs> = async (body) => {
-    const response = await axios.post('http://localhost:3000/user/auth',body);
+    const response = await axios.post('http://localhost:3000/user/auth', body);
     console.log(response);
   };
   return (
