@@ -27,9 +27,9 @@ export const SocketProvider = ({ children }: Children) => {
       console.log('connect', socket.id);
       setSocketId(socket.id);
       setIsConnected(true);
-      showWarningAlert(
-        'You have connected without authorisation. Please verify yourself.'
-      );
+      // showWarningAlert(
+      //   'You have connected without authorisation. Please verify yourself.'
+      // );
     }
 
     function onDisconnect() {
