@@ -5,8 +5,10 @@
   grid-template-columns: 0.3fr 1fr;
 }
 
-@media (min-width: 320px) and (max-width: 450px) {
+@media (min-width: 320px) and (max-width: 1015px) {
   .main-wrapper {
     grid-template-columns: 1fr;
+    justify-items: center;
+    gap:5rem;
   }
 }

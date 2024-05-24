@@ -1,5 +1,4 @@
 import { createContext, useState, ReactNode, useEffect } from 'react';
-import useAlert from '../hooks/useAlert';
 import { socket } from '../socket/socket';
 
 type Children = {
@@ -10,26 +9,27 @@ type SocketContextType = {
   isConnected: boolean;
   socketId: string | undefined;
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>;
+  userId: string;
+  setUserId: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const SocketContext = createContext<SocketContextType>({
   isConnected: false,
   socketId: undefined,
   setIsConnected: () => {},
+  userId: '',
+  setUserId: () => {},
 });
 
 export const SocketProvider = ({ children }: Children) => {
-  const { showWarningAlert } = useAlert();
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [socketId, setSocketId] = useState<string | undefined>('');
+  const [userId, setUserId] = useState('');
   useEffect(() => {
     function onConnect() {
       console.log('connect', socket.id);
       setSocketId(socket.id);
       setIsConnected(true);
-      // showWarningAlert(
-      //   'You have connected without authorisation. Please verify yourself.'
-      // );
     }
 
     function onDisconnect() {
@@ -51,6 +51,8 @@ export const SocketProvider = ({ children }: Children) => {
         isConnected,
         socketId,
         setIsConnected,
+        userId,
+        setUserId,
       }}
     >
       {children}

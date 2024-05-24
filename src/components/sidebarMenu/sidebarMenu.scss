@@ -25,7 +25,7 @@
 }
 
 .navigation.active {
-  width: 250px;
+  width: 200px;
 }
 
 .navigation ul {
@@ -162,20 +162,23 @@
   color: $clr-primary-5;
 }
 
-@media (min-width: 320px) and (max-width: 450px) {
+@media (min-width: 320px) and (max-width: 1015px) {
   .navigation {
     height: auto;
     background: transparent;
+    margin-right: auto;
   }
   .navigation.active {
-    width: 250px;
+    width: 100vw;
     height: 100vh;
     background: white;
+    position: absolute;
+    z-index: 5;
+    overflow: hidden;
     .menuToogle {
       border-bottom-right-radius: 0rem;
       justify-content: center;
     }
-    // overflow: hidden;
   }
   .menuToogle {
     background-color: $clr-primary-5;

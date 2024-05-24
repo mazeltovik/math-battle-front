@@ -23,12 +23,18 @@ import useSocket from '../../hooks/useSocket';
 import axios from 'axios';
 //Handlers
 
+type AuthRes = {
+  userId: string;
+  name: string;
+  socketId: string;
+};
+
 export default function SignUpForm() {
   const [showNameErr, setShowNameErr] = useState<boolean>(false);
   const [showLoginErr, setShowLoginErr] = useState<boolean>(false);
   const [showPassErr, setShowPassErr] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { setIsConnected, socketId } = useSocket();
+  const { setIsConnected, socketId, setUserId } = useSocket();
   const {
     register,
     handleSubmit,
@@ -37,13 +43,12 @@ export default function SignUpForm() {
   const onSubmit: SubmitHandler<SignUpInputs> = async (body) => {
     if (socketId) {
       const newUser = Object.assign(body, { socketId });
-      const response = await axios.post(
+      const response = await axios.post<AuthRes>(
         'http://localhost:3000/user/auth',
         body
       );
-      console.log(response.status);
       if (response.status == 200) {
-        console.log(response.data);
+        setUserId(response.data.userId);
         navigate('/');
       }
     }
