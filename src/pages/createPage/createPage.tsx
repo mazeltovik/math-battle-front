@@ -2,7 +2,7 @@
 import './createPage.scss';
 
 //Types
-
+//Эманера
 //Images
 
 //MUI
@@ -21,14 +21,14 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 //Components
 import DifficultyRating from '../../components/difficultyRating/difficultyRating';
 //React
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 //Hooks
 import useSocket from '../../hooks/useSocket';
-import useSome from '../../hooks/useSome';
+import useAlert from '../../hooks/useAlert';
 //Helpers
 import theme from '../../helpers/authTheme';
 //Handlers
-
+import createRoom from '../../socket/events/createRooms';
 //Socket
 import { socket } from '../../socket/socket';
 
@@ -39,9 +39,15 @@ export default function CreatePage() {
   const [isAllowedChat, setIsAllowedChat] = useState(false);
   const [isError, setIsError] = useState(false);
   const { userId, socketId } = useSocket();
-  useSome();
+  const { showErrorAlert } = useAlert();
+  const createRoomCashed = useMemo(()=>createRoom(showErrorAlert),[])
+  const createRoomHandler = useCallback(createRoomCashed,[])
   useEffect(() => {
-    socket.on('createRoom', (data) => console.log(data));
+    console.log('hi');
+    socket.on('createRoom', createRoomHandler);
+    return ()=>{
+      socket.off('createRoom', createRoomHandler)
+    }
   }, []);
   const handleTimeChange = (event: SelectChangeEvent) => {
     setTime(event.target.value);
@@ -52,7 +58,7 @@ export default function CreatePage() {
       setIsError(true);
     }
     const roomConfig = {
-      userId: '0a99aeb5-31d0-4c5c-8b25-047916266cba',
+      userId: '0ceb5d6c-0150-4777-9cac-88db9f611efc',
       socketId,
       name,
       time,
