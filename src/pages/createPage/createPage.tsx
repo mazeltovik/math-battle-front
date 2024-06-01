@@ -20,6 +20,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 //Components
 import DifficultyRating from '../../components/difficultyRating/difficultyRating';
+import RoomCard from '../../components/roomCard/roomCard';
 //React
 import { useState, useEffect, useMemo, useCallback } from 'react';
 //Hooks
@@ -28,7 +29,7 @@ import useAlert from '../../hooks/useAlert';
 //Helpers
 import theme from '../../helpers/authTheme';
 //Handlers
-import createRoom from '../../socket/events/createRooms';
+import createRoom, { CreateRoomRes } from '../../socket/events/createRooms';
 //Socket
 import { socket } from '../../socket/socket';
 
@@ -38,16 +39,31 @@ export default function CreatePage() {
   const [difficulty, setDifficulty] = useState(2);
   const [isAllowedChat, setIsAllowedChat] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [roomConfig, setRoomConfig] = useState<CreateRoomRes[] | null>(null);
+  const [openRoomCard, setOpenRoomCard] = useState(false);
   const { userId, socketId } = useSocket();
-  const { showErrorAlert } = useAlert();
-  const createRoomCashed = useMemo(()=>createRoom(showErrorAlert),[])
-  const createRoomHandler = useCallback(createRoomCashed,[])
+  const { showErrorAlert, showWarningAlert } = useAlert();
+  const createRoomCashed = useMemo(
+    () =>
+      createRoom(
+        setRoomConfig,
+        setOpenRoomCard,
+        showErrorAlert,
+        showWarningAlert
+      ),
+    []
+  );
+  const createRoomHandler = useCallback(createRoomCashed, []);
   useEffect(() => {
-    console.log('hi');
+    socket.on('getRoomByUserId', createRoomHandler);
     socket.on('createRoom', createRoomHandler);
-    return ()=>{
-      socket.off('createRoom', createRoomHandler)
-    }
+    socket.emit('getRoomByUserId', {
+      userId: 'ce155f83-1fac-42a0-9dcf-e0e3b7a8a0fa',
+    });
+    return () => {
+      socket.off('createRoom', createRoomHandler);
+      socket.off('getRoomByUserId', createRoomHandler);
+    };
   }, []);
   const handleTimeChange = (event: SelectChangeEvent) => {
     setTime(event.target.value);
@@ -57,15 +73,20 @@ export default function CreatePage() {
     if (name.length == 0) {
       setIsError(true);
     }
-    const roomConfig = {
-      userId: '0ceb5d6c-0150-4777-9cac-88db9f611efc',
-      socketId,
-      name,
-      time,
-      difficulty,
-      isAllowedChat,
-    };
-    socket.emit('createRoom', roomConfig);
+    if (!roomConfig && name) {
+      const socketRoomConfig = {
+        userId: 'ce155f83-1fac-42a0-9dcf-e0e3b7a8a0fa',
+        socketId,
+        name,
+        time,
+        difficulty,
+        isAllowedChat,
+      };
+      socket.emit('createRoom', socketRoomConfig);
+    }
+    if (roomConfig) {
+      showWarningAlert('You have already created room.');
+    }
   };
   return (
     <ThemeProvider theme={theme}>
@@ -170,6 +191,7 @@ export default function CreatePage() {
               <Button
                 variant="contained"
                 type="submit"
+                // disabled={true}
                 onClick={handleSubmit}
                 sx={{
                   ':hover': {
@@ -184,6 +206,17 @@ export default function CreatePage() {
             </Stack>
           </form>
         </div>
+        {roomConfig && (
+          <RoomCard
+            roomId={roomConfig[0].roomId}
+            open={openRoomCard}
+            name={roomConfig[0].name}
+            users={roomConfig[0].users}
+            time={roomConfig[0].time}
+            difficulty={roomConfig[0].difficulty}
+            isAllowedChat={roomConfig[0].isAllowedChat}
+          />
+        )}
       </Paper>
     </ThemeProvider>
   );

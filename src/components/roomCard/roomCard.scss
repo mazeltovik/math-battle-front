@@ -1,0 +1,43 @@
+@import '../../main';
+
+.card-container {
+  width: 100%;
+  margin-top: 1rem;
+  background-color: $main-bg;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  height: 0;
+  opacity: 0;
+  transition: 0.5s cubic-bezier(0, 1, 0.5, 1);
+  transform: translateY(-100%);
+  &.open {
+    transform: translateY(0%);
+    opacity: 1;
+    height: auto;
+  }
+  .card-wrapper {
+    padding: 1rem 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+    .icons {
+      display: flex;
+      justify-content: space-evenly;
+    }
+    .room-config {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      justify-items: center;
+      & :nth-child(1) {
+        width: 90%;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+    hr {
+      display: inline;
+    }
+  }
+}
