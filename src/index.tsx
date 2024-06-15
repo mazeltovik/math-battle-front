@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { SocketProvider } from './contexts/socketContext';
 import { AlertProvider } from './contexts/alertContext';
 import { SidebarProvider } from './contexts/sidebarContext';
+import { ModalProvider } from './contexts/modalContext';
 import Wrapper from './components/routerWrapper/routerWrapper';
 import { App } from './app';
 import AuthPage from './pages/authPage/authPage';
@@ -65,7 +66,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: 'author',
+    path: '/author',
     element: <Wrapper />,
     children: [
       {
@@ -78,6 +79,16 @@ const router = createBrowserRouter([
     path: 'auth',
     element: <AuthPage />,
   },
+  {
+    path: '/awaiters',
+    element: <Wrapper />,
+    children: [
+      {
+        path: '',
+        element: <p>Awaiters</p>,
+      },
+    ],
+  },
 ]);
 
 const container = document.getElementById('root');
@@ -86,9 +97,11 @@ const root = createRoot(container!);
 root.render(
   <AlertProvider>
     <SocketProvider>
-      <SidebarProvider>
-        <RouterProvider router={router} />
-      </SidebarProvider>
+      <ModalProvider>
+        <SidebarProvider>
+          <RouterProvider router={router} />
+        </SidebarProvider>
+      </ModalProvider>
     </SocketProvider>
   </AlertProvider>
 );

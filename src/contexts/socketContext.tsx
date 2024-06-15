@@ -11,6 +11,8 @@ type SocketContextType = {
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>;
   userId: string;
   setUserId: React.Dispatch<React.SetStateAction<string>>;
+  targetRoom: string;
+  setTargetRoom: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const SocketContext = createContext<SocketContextType>({
@@ -19,12 +21,15 @@ const SocketContext = createContext<SocketContextType>({
   setIsConnected: () => {},
   userId: '',
   setUserId: () => {},
+  targetRoom: '',
+  setTargetRoom: () => {},
 });
 
 export const SocketProvider = ({ children }: Children) => {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [socketId, setSocketId] = useState<string | undefined>('');
   const [userId, setUserId] = useState('');
+  const [targetRoom, setTargetRoom] = useState('');
   useEffect(() => {
     function onConnect() {
       console.log('connect', socket.id);
@@ -53,6 +58,8 @@ export const SocketProvider = ({ children }: Children) => {
         setIsConnected,
         userId,
         setUserId,
+        targetRoom,
+        setTargetRoom,
       }}
     >
       {children}

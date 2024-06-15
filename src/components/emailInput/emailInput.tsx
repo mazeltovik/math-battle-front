@@ -43,23 +43,23 @@ export default function EmailInput({
             required: (v) => {
               return authPattern.required(v);
             },
-            maxLength: (v) => {
-              if (v) {
-                return authPattern.maxLength(v, 'Email');
-              }
-            },
-            matchDomainPattern: (v) => {
-              return authPattern.matchDomainPattern(v);
-            },
-            matchEmailPattern: (v) => {
-              return authPattern.matchEmailPattern(v);
-            },
-            matchSpacePattern: (v) => {
-              return authPattern.matchSpacePattern(v, 'Email');
-            },
-            matchDogPattern: (v) => {
-              return authPattern.matchDogPattern(v);
-            },
+            // maxLength: (v) => {
+            //   if (v) {
+            //     return authPattern.maxLength(v, 'Email');
+            //   }
+            // },
+            // matchDomainPattern: (v) => {
+            //   return authPattern.matchDomainPattern(v);
+            // },
+            // matchEmailPattern: (v) => {
+            //   return authPattern.matchEmailPattern(v);
+            // },
+            // matchSpacePattern: (v) => {
+            //   return authPattern.matchSpacePattern(v, 'Email');
+            // },
+            // matchDogPattern: (v) => {
+            //   return authPattern.matchDogPattern(v);
+            // },
           },
         })}
       ></input>

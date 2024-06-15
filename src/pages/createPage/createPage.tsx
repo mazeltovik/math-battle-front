@@ -29,7 +29,7 @@ import useAlert from '../../hooks/useAlert';
 //Helpers
 import theme from '../../helpers/authTheme';
 //Handlers
-import createRoom, { CreateRoomRes } from '../../socket/events/createRooms';
+import createRoom, { CreateRoomRes } from '../../socket/events/createRoom';
 //Socket
 import { socket } from '../../socket/socket';
 
@@ -55,14 +55,14 @@ export default function CreatePage() {
   );
   const createRoomHandler = useCallback(createRoomCashed, []);
   useEffect(() => {
-    socket.on('getRoomByUserId', createRoomHandler);
-    socket.on('createRoom', createRoomHandler);
-    socket.emit('getRoomByUserId', {
-      userId: 'ce155f83-1fac-42a0-9dcf-e0e3b7a8a0fa',
+    socket.on('GET_ROOM_BY_USER_ID', createRoomHandler);
+    socket.on('CREATE_ROOM', createRoomHandler);
+    socket.emit('GET_ROOM_BY_USER_ID', {
+      userId,
     });
     return () => {
-      socket.off('createRoom', createRoomHandler);
-      socket.off('getRoomByUserId', createRoomHandler);
+      socket.off('CREATE_ROOM', createRoomHandler);
+      socket.off('GET_ROOM_BY_USER_ID', createRoomHandler);
     };
   }, []);
   const handleTimeChange = (event: SelectChangeEvent) => {
@@ -75,14 +75,15 @@ export default function CreatePage() {
     }
     if (!roomConfig && name) {
       const socketRoomConfig = {
-        userId: 'ce155f83-1fac-42a0-9dcf-e0e3b7a8a0fa',
+        userId,
         socketId,
         name,
         time,
         difficulty,
         isAllowedChat,
+        connectedUsers: 1,
       };
-      socket.emit('createRoom', socketRoomConfig);
+      socket.emit('CREATE_ROOM', socketRoomConfig);
     }
     if (roomConfig) {
       showWarningAlert('You have already created room.');
@@ -211,7 +212,7 @@ export default function CreatePage() {
             roomId={roomConfig[0].roomId}
             open={openRoomCard}
             name={roomConfig[0].name}
-            users={roomConfig[0].users}
+            connectedUsers={roomConfig[0].connectedUsers}
             time={roomConfig[0].time}
             difficulty={roomConfig[0].difficulty}
             isAllowedChat={roomConfig[0].isAllowedChat}

@@ -10,6 +10,26 @@
   opacity: 0;
   transition: 0.5s cubic-bezier(0, 1, 0.5, 1);
   transform: translateY(-100%);
+  position: relative;
+  cursor: pointer;
+  .overlay{
+    width: 0;
+    position: absolute; 
+    height: 0;
+    border-radius: 50%;
+    background: $clr-primary-5;
+    left: 37.5%;
+    top:37.5%;
+    z-index: 0;
+    opacity: 0.2;
+    transition: transform 0.3s ease-out;
+  }
+  &:hover .overlay {
+    transform: scale(4) translateZ(0);
+    width: 25%;
+    height: 25%;
+    border-radius: 1px;
+  }
   &.open {
     transform: translateY(0%);
     opacity: 1;

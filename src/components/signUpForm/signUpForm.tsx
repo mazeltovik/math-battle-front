@@ -49,7 +49,7 @@ export default function SignUpForm() {
       );
       if (response.status == 200) {
         setUserId(response.data.userId);
-        navigate('/');
+        navigate('/create');
       }
     }
   };

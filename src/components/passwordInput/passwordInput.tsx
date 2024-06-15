@@ -47,21 +47,21 @@ export default function PasswordInput({
             required: (v) => {
               return authPattern.required(v);
             },
-            maxLength: (v) => {
-              return authPattern.maxLength(v, 'Password');
-            },
-            matchSpacePattern: (v) => {
-              return authPattern.matchSpacePattern(v, 'Password');
-            },
-            matchLowerCasePattern: (v) => {
-              return authPattern.matchLowerCasePattern(v);
-            },
-            matchUpperCasePattern: (v) => {
-              return authPattern.matchUpperCasePattern(v);
-            },
-            matchDigitPattern: (v) => {
-              return authPattern.matchDigitPattern(v);
-            },
+            // maxLength: (v) => {
+            //   return authPattern.maxLength(v, 'Password');
+            // },
+            // matchSpacePattern: (v) => {
+            //   return authPattern.matchSpacePattern(v, 'Password');
+            // },
+            // matchLowerCasePattern: (v) => {
+            //   return authPattern.matchLowerCasePattern(v);
+            // },
+            // matchUpperCasePattern: (v) => {
+            //   return authPattern.matchUpperCasePattern(v);
+            // },
+            // matchDigitPattern: (v) => {
+            //   return authPattern.matchDigitPattern(v);
+            // },
           },
         })}
       ></input>

@@ -15,23 +15,34 @@ import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import Badge from '@mui/material/Badge';
+import MailIcon from '@mui/icons-material/Mail';
 //Components
 
 //React
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
 import { NavLink, useLocation, useHref } from 'react-router-dom';
 //Hooks
 import useSidebar from '../../hooks/useSidebar';
 //Helpers
-
+import reqForConnecting from '../../socket/events/reqForConnecting';
 //Handlers
 import activeSidebarHandler from '../../handlers/activeSidebar';
 import menuItemHandler from '../../handlers/menuItemHandler';
 
+//Socket
+import { socket } from '../../socket/socket';
+
 export default function SidebarMenu({}: sidebarMenuTypes) {
-  let location = useLocation();
+  const location = useLocation();
   const { active, setActive } = useSidebar();
+  const [amoutOfAwaiters, setAmoutOfAwaiters] = useState(0);
   const menuParentRef = useRef<HTMLUListElement>(null);
+  const reqForConnectingCashed = useMemo(
+    () => reqForConnecting(setAmoutOfAwaiters),
+    []
+  );
+  const reqForConnectingHandler = useCallback(reqForConnectingCashed, []);
   useEffect(() => {
     const { pathname } = location;
     const childs = menuParentRef.current?.children;
@@ -43,6 +54,8 @@ export default function SidebarMenu({}: sidebarMenuTypes) {
         }
       });
     }
+    socket.on('REQUEST_FOR_CONNECTING', reqForConnectingHandler);
+    socket.on('LEAVE_TARGET_ROOM', reqForConnectingHandler);
     return () => {
       if (childs) {
         const arrOfChilds = Array.from(childs);
@@ -52,6 +65,8 @@ export default function SidebarMenu({}: sidebarMenuTypes) {
           }
         });
       }
+      socket.off('REQUEST_FOR_CONNECTING', reqForConnectingHandler);
+      socket.off('LEAVE_AWAITING_ROOM', reqForConnectingHandler);
     };
   }, [location]);
   return (
@@ -94,6 +109,16 @@ export default function SidebarMenu({}: sidebarMenuTypes) {
               <MeetingRoomIcon />
             </span>
             <span className="text">Create</span>
+          </NavLink>
+        </li>
+        <li className="list /awaiters">
+          <NavLink to="/awaiters">
+            <span className="icon">
+              <Badge badgeContent={amoutOfAwaiters} color="secondary">
+                <MailIcon />
+              </Badge>
+            </span>
+            <span className="text">Awaiters</span>
           </NavLink>
         </li>
         <li className="list /achievements">

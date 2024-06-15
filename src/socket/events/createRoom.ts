@@ -5,6 +5,7 @@ export type CreateRoomRes = {
   difficulty: number;
   isAllowedChat: boolean;
   time: string;
+  connectedUsers: number;
 };
 type Err = {
   err: string;

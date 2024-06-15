@@ -2,8 +2,9 @@ export type roomCardTypes = {
   roomId: string;
   open: boolean;
   name: string;
-  users: number;
+  connectedUsers: number;
   time: string;
   difficulty: number;
   isAllowedChat: boolean;
+  key?: string;
 };

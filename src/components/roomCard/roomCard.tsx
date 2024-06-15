@@ -32,7 +32,7 @@ export default function RoomCard({
   roomId,
   open,
   name,
-  users,
+  connectedUsers,
   time,
   difficulty,
   isAllowedChat,
@@ -43,6 +43,7 @@ export default function RoomCard({
       className={open ? 'card-container open' : 'card-container'}
       id={roomId}
     >
+      <div className="overlay"></div>
       <div className="card-wrapper">
         <div className="icons">
           <MeetingRoomIcon />
@@ -57,7 +58,7 @@ export default function RoomCard({
         </div>
         <div className="room-config">
           <p>{name}</p>
-          <p>{users}/2</p>
+          <p>{connectedUsers}/2</p>
           <p>{`${time}s`}</p>
           <p>
             {difficulty == 1 ? (

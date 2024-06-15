@@ -38,14 +38,14 @@ export default function NameInput({
         defaultValue=""
         {...register('name', {
           required: { value: true, message: 'This field is required' },
-          minLength: {
-            value: 2,
-            message: 'Name must contain more than 2 characters',
-          },
-          pattern: {
-            value: /^[a-zA-Z]+(?:\s+[a-zA-Z]+)*$/i,
-            message: 'Alphabetical characters only',
-          },
+          // minLength: {
+          //   value: 2,
+          //   message: 'Name must contain more than 2 characters',
+          // },
+          // pattern: {
+          //   value: /^[a-zA-Z]+(?:\s+[a-zA-Z]+)*$/i,
+          //   message: 'Alphabetical characters only',
+          // },
         })}
       ></input>
       <label htmlFor="name" className="form__label">
