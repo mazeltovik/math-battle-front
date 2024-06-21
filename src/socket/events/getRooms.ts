@@ -1,7 +1,7 @@
-import { CreateRoomRes } from './createRoom';
+import { ReceiveCreatedRoom } from '../socketTypes';
 
 export default function getRooms(
-  setRooms: React.Dispatch<React.SetStateAction<CreateRoomRes[]>>
+  setRooms: React.Dispatch<React.SetStateAction<ReceiveCreatedRoom[]>>
 ) {
-  return (data: CreateRoomRes[]) => setRooms(data);
+  return (data: ReceiveCreatedRoom[]) => setRooms(data);
 }

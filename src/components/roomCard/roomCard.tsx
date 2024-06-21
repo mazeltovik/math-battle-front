@@ -25,9 +25,9 @@ import { useMemo } from 'react';
 //Hooks
 
 //Helpers
-
-//Handlers
 import getHex from '../../helpers/getHex';
+//Handlers
+
 export default function RoomCard({
   roomId,
   open,

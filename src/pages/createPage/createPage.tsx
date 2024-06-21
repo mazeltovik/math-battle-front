@@ -2,6 +2,7 @@
 import './createPage.scss';
 
 //Types
+import { ReceiveCreatedRoom } from '../../socket/socketTypes';
 //Эманера
 //Images
 
@@ -29,7 +30,7 @@ import useAlert from '../../hooks/useAlert';
 //Helpers
 import theme from '../../helpers/authTheme';
 //Handlers
-import createRoom, { CreateRoomRes } from '../../socket/events/createRoom';
+import createRoom from '../../socket/events/createRoom';
 //Socket
 import { socket } from '../../socket/socket';
 
@@ -39,7 +40,9 @@ export default function CreatePage() {
   const [difficulty, setDifficulty] = useState(2);
   const [isAllowedChat, setIsAllowedChat] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [roomConfig, setRoomConfig] = useState<CreateRoomRes[] | null>(null);
+  const [roomConfig, setRoomConfig] = useState<ReceiveCreatedRoom[] | null>(
+    null
+  );
   const [openRoomCard, setOpenRoomCard] = useState(false);
   const { userId, socketId } = useSocket();
   const { showErrorAlert, showWarningAlert } = useAlert();

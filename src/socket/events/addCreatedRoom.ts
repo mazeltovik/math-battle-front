@@ -1,13 +1,17 @@
 import { Socket } from 'socket.io-client';
-import { CreateRoomRes } from './createRoom';
+import {
+  ReceiveCreatedRoom,
+  ServerToClientEvents,
+  ClientToServerEvents,
+} from '../socketTypes';
 
 export default function addCreatedRoom(
   userId: string,
-  rooms: CreateRoomRes[],
-  setRooms: React.Dispatch<React.SetStateAction<CreateRoomRes[]>>,
-  socket: Socket<DefaultEventsMap, DefaultEventsMap>
+  rooms: ReceiveCreatedRoom[],
+  setRooms: React.Dispatch<React.SetStateAction<ReceiveCreatedRoom[]>>,
+  socket: Socket<ServerToClientEvents, ClientToServerEvents>
 ) {
-  return (data: CreateRoomRes) => {
+  return (data: ReceiveCreatedRoom) => {
     socket.emit('GET_ROOMS', { userId });
     setRooms([...rooms, data]);
   };

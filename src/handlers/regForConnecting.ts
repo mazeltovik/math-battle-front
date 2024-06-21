@@ -1,4 +1,8 @@
 import { Socket } from 'socket.io-client';
+import {
+  ServerToClientEvents,
+  ClientToServerEvents,
+} from '../socket/socketTypes';
 
 export default function reqForConnecting(
   userId: string,
@@ -7,7 +11,7 @@ export default function reqForConnecting(
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>,
   setRollUp: React.Dispatch<React.SetStateAction<boolean>>,
   setTargetRoom: React.Dispatch<React.SetStateAction<string>>,
-  socket: Socket<DefaultEventsMap, DefaultEventsMap>
+  socket: Socket<ServerToClientEvents, ClientToServerEvents>
 ) {
   return (event: React.FormEvent<HTMLDivElement>) => {
     const target = event.target as HTMLDivElement;

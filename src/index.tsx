@@ -9,6 +9,7 @@ import { App } from './app';
 import AuthPage from './pages/authPage/authPage';
 import SearchPage from './pages/searchPage/searchPage';
 import CreatePage from './pages/createPage/createPage';
+import AwaitersPage from './pages/awaitersPage/awaitersPage';
 
 import CountdownTimer from './components/countdownTimer/countdownTimer';
 
@@ -85,7 +86,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <p>Awaiters</p>,
+        element: <AwaitersPage />,
       },
     ],
   },

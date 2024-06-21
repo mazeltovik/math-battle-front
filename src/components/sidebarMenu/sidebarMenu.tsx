@@ -21,7 +21,7 @@ import MailIcon from '@mui/icons-material/Mail';
 
 //React
 import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
-import { NavLink, useLocation, useHref } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 //Hooks
 import useSidebar from '../../hooks/useSidebar';
 //Helpers
@@ -55,7 +55,7 @@ export default function SidebarMenu({}: sidebarMenuTypes) {
       });
     }
     socket.on('REQUEST_FOR_CONNECTING', reqForConnectingHandler);
-    socket.on('LEAVE_TARGET_ROOM', reqForConnectingHandler);
+    socket.on('LEAVE_AWAITING_ROOM', reqForConnectingHandler);
     return () => {
       if (childs) {
         const arrOfChilds = Array.from(childs);

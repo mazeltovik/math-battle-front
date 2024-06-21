@@ -2,7 +2,7 @@
 import './searchPage.scss';
 
 //Types
-import { CreateRoomRes } from '../../socket/events/createRoom';
+import { ReceiveCreatedRoom } from '../../socket/socketTypes';
 //Images
 
 //MUI
@@ -26,7 +26,7 @@ import reqForConnecting from '../../handlers/regForConnecting';
 import { socket } from '../../socket/socket';
 
 export default function SearchPage() {
-  const [rooms, setRooms] = useState<CreateRoomRes[]>([]);
+  const [rooms, setRooms] = useState<ReceiveCreatedRoom[]>([]);
   const { userId, setTargetRoom } = useSocket();
   const { setOpenModal, setRollUp, openModal, rollUp } = useModal();
   const getRoomsCashed = useMemo(() => getRooms(setRooms), []);
