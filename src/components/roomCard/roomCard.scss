@@ -12,14 +12,14 @@
   transform: translateY(-100%);
   position: relative;
   cursor: pointer;
-  .overlay{
+  .overlay {
     width: 0;
-    position: absolute; 
+    position: absolute;
     height: 0;
     border-radius: 50%;
     background: $clr-primary-5;
     left: 37.5%;
-    top:37.5%;
+    top: 37.5%;
     z-index: 0;
     opacity: 0.2;
     transition: transform 0.3s ease-out;

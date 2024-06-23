@@ -5,7 +5,8 @@ import {
 } from '../socket/socketTypes';
 
 export default function aproveAwaiter(
-  socket: Socket<ServerToClientEvents, ClientToServerEvents>
+  socket: Socket<ServerToClientEvents, ClientToServerEvents>,
+  host: string
 ) {
   return (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = event.target as HTMLDivElement;
@@ -14,7 +15,8 @@ export default function aproveAwaiter(
     if (btnParent) {
       const parentNode = btnParent.parentElement;
       if (parentNode) {
-        console.log(parentNode.id);
+        const foe = parentNode.id;
+        socket.emit('APPROVE_CONNECTION', { host, foe });
       }
     }
   };

@@ -1,51 +1,50 @@
 @import '../../../main.scss';
 
-.modal_container{
-    background-color: rgba(0,0,0,0.4);
-    position: fixed;
-    top: 0;
-    left:0;
-    z-index: 1000;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(255,255,255,.7);
-    box-shadow: 0 20px 50px -10px rgba(0,0,0,.5);
-    padding: 0 2rem;
-    .modal_content{
-        width: 50%;
-        .rollUp{
-            cursor: pointer;
-            width: 3rem;
-            height: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            margin-left: auto;
-            &:hover{
-                background-color: $clr-grey-2;
-                transition: 0.3s;
-                border-top-right-radius: 4px;
-            }
-        }
+.modal_container {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+  padding: 0 2rem;
+  .modal_content {
+    width: 50%;
+    .rollUp {
+      cursor: pointer;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-left: auto;
+      &:hover {
+        background-color: $clr-grey-2;
+        transition: 0.3s;
+        border-top-right-radius: 4px;
+      }
     }
+  }
 }
 
-.rollUp-container{
-    position: fixed;
-    width: 100vw;
-    bottom: 0;
+.rollUp-container {
+  position: fixed;
+  width: 100vw;
+  bottom: 0;
 }
 
-
-@media (min-width: 320px) and (max-width: 1015px){
-    .modal_container{
-        padding:0;
-        .modal_content{
-            width:80%;
-        }
-    } 
+@media (min-width: 320px) and (max-width: 1015px) {
+  .modal_container {
+    padding: 0;
+    .modal_content {
+      width: 80%;
+    }
+  }
 }

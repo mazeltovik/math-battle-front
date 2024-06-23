@@ -1,5 +1,9 @@
 import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  BrowserRouter,
+} from 'react-router-dom';
 import { SocketProvider } from './contexts/socketContext';
 import { AlertProvider } from './contexts/alertContext';
 import { SidebarProvider } from './contexts/sidebarContext';
@@ -87,6 +91,16 @@ const router = createBrowserRouter([
       {
         path: '',
         element: <AwaitersPage />,
+      },
+    ],
+  },
+  {
+    path: 'room/:roomId',
+    element: <Wrapper />,
+    children: [
+      {
+        path: '',
+        element: <p>room Id</p>,
       },
     ],
   },

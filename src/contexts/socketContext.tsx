@@ -1,4 +1,10 @@
-import { createContext, useState, ReactNode, useEffect } from 'react';
+import {
+  createContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useContext,
+} from 'react';
 import { socket } from '../socket/socket';
 
 type Children = {
@@ -41,10 +47,8 @@ export const SocketProvider = ({ children }: Children) => {
       console.log('disconnect');
       setIsConnected(false);
     }
-
     socket.on('connect', onConnect);
     socket.on('disconnect', onDisconnect);
-
     return () => {
       socket.off('connect', onConnect);
       socket.off('disconnect', onDisconnect);

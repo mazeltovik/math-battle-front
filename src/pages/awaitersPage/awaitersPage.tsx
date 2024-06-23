@@ -13,6 +13,7 @@ import Stack from '@mui/material/Stack';
 import AwaiterCard from '../../components/awaiterCard/awaiterCard';
 //React
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 //Hooks
 import useSocket from '../../hooks/useSocket';
 import useModal from '../../hooks/useModal';
@@ -20,20 +21,33 @@ import useModal from '../../hooks/useModal';
 import theme from '../../helpers/authTheme';
 //Handlers
 import aproveAwaiter from '../../handlers/aproveAwaiter';
+import getAwaiters from '../../socket/events/getAwaiters';
+import approveConnection from '../../socket/events/approveConnection';
 //Socket
 import { socket } from '../../socket/socket';
 
 export default function AwaitersPage() {
-  const { socketId } = useSocket();
+  const { socketId, userId } = useSocket();
   const [awaiters, setAwaiters] = useState<Awaiter[]>([]);
+  const { setOpenModal, setRollUp } = useModal();
+  const navigate = useNavigate();
+  const getAwaitersCashed = useMemo(() => getAwaiters(setAwaiters), []);
+  const getAwaitersHandler = useCallback(getAwaitersCashed, []);
+  const approveConnectionCashed = useMemo(
+    () => approveConnection(navigate, setOpenModal, setRollUp),
+    []
+  );
+  const approveConnectionHandler = useCallback(approveConnectionCashed, []);
   useEffect(() => {
-    socket.on('GET_AWAITERS', (data: Awaiter[]) => {
-      console.log(data);
-      setAwaiters(data);
-    });
+    socket.on('GET_AWAITERS', getAwaitersHandler);
+    socket.on('APPROVE_CONNECTION', approveConnectionHandler);
     socket.emit('GET_AWAITERS', {
       userId: socketId,
     });
+    return () => {
+      socket.off('GET_AWAITERS', getAwaitersHandler);
+      socket.off('APPROVE_CONNECTION', approveConnectionHandler);
+    };
   }, []);
   return (
     <ThemeProvider theme={theme}>
@@ -48,7 +62,10 @@ export default function AwaitersPage() {
           position: 'relative',
         }}
       >
-        <div className="awaiters-container" onClick={aproveAwaiter(socket)}>
+        <div
+          className="awaiters-container"
+          onClick={aproveAwaiter(socket, userId)}
+        >
           {awaiters.map((awaiter) => {
             return (
               <AwaiterCard
