@@ -17,6 +17,8 @@ export default function aproveAwaiter(
       if (parentNode) {
         const foe = parentNode.id;
         socket.emit('APPROVE_CONNECTION', { host, foe });
+        socket.emit('REMOVE_AWAITER', { host, foe });
+        socket.emit('UPDATE_CONNECTED_USERS', { host, updateUsers: 2 });
       }
     }
   };

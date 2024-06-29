@@ -31,6 +31,16 @@ export type ReceiveApprovedConnection = {
   roomId: string;
 };
 
+export type ReceiveUpdateConnectedUsers = {
+  roomId: string;
+  connectedUsers: number;
+};
+
+export type EmitUpdateConnectedUsers = {
+  host: string;
+  updateUsers: number;
+};
+
 export interface ServerToClientEvents {
   GET_ROOM_BY_USER_ID: (data: ReceiveCreatedRoom[] & Err) => void;
   CREATE_ROOM: (data: ReceiveCreatedRoom[] & Err) => void;
@@ -40,6 +50,8 @@ export interface ServerToClientEvents {
   LEAVE_AWAITING_ROOM: (amoutOfAwaiters: number) => void;
   GET_AWAITERS: (data: Awaiter[]) => void;
   APPROVE_CONNECTION: (data: ReceiveApprovedConnection) => void;
+  REMOVE_AWAITER: (data: { amountOfAwaiters: number }) => void;
+  UPDATE_CONNECTED_USERS: (data: ReceiveUpdateConnectedUsers) => void;
 }
 
 export interface ClientToServerEvents {
@@ -62,4 +74,6 @@ export interface ClientToServerEvents {
   }) => void;
   GET_AWAITERS: ({ userId }: { userId: string | undefined }) => void;
   APPROVE_CONNECTION: (data: EmitApprovedConnection) => void;
+  REMOVE_AWAITER: (data: EmitApprovedConnection) => void;
+  UPDATE_CONNECTED_USERS: (data: EmitUpdateConnectedUsers) => void;
 }

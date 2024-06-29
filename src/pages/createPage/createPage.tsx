@@ -24,13 +24,16 @@ import DifficultyRating from '../../components/difficultyRating/difficultyRating
 import RoomCard from '../../components/roomCard/roomCard';
 //React
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 //Hooks
 import useSocket from '../../hooks/useSocket';
 import useAlert from '../../hooks/useAlert';
+import useModal from '../../hooks/useModal';
 //Helpers
 import theme from '../../helpers/authTheme';
 //Handlers
 import createRoom from '../../socket/events/createRoom';
+import approveConnection from '../../socket/events/approveConnection';
 //Socket
 import { socket } from '../../socket/socket';
 
@@ -46,6 +49,8 @@ export default function CreatePage() {
   const [openRoomCard, setOpenRoomCard] = useState(false);
   const { userId, socketId } = useSocket();
   const { showErrorAlert, showWarningAlert } = useAlert();
+  const { setOpenModal, setRollUp } = useModal();
+  const navigate = useNavigate();
   const createRoomCashed = useMemo(
     () =>
       createRoom(
@@ -57,15 +62,22 @@ export default function CreatePage() {
     []
   );
   const createRoomHandler = useCallback(createRoomCashed, []);
+  const approveConnectionCashed = useMemo(
+    () => approveConnection(navigate, setOpenModal, setRollUp),
+    []
+  );
+  const approveConnectionHandler = useCallback(approveConnectionCashed, []);
   useEffect(() => {
     socket.on('GET_ROOM_BY_USER_ID', createRoomHandler);
     socket.on('CREATE_ROOM', createRoomHandler);
+    socket.on('APPROVE_CONNECTION', approveConnectionHandler);
     socket.emit('GET_ROOM_BY_USER_ID', {
       userId,
     });
     return () => {
       socket.off('CREATE_ROOM', createRoomHandler);
       socket.off('GET_ROOM_BY_USER_ID', createRoomHandler);
+      socket.off('APPROVE_CONNECTION', approveConnectionHandler);
     };
   }, []);
   const handleTimeChange = (event: SelectChangeEvent) => {

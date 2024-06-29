@@ -56,6 +56,10 @@ export default function SidebarMenu({}: sidebarMenuTypes) {
     }
     socket.on('REQUEST_FOR_CONNECTING', reqForConnectingHandler);
     socket.on('LEAVE_AWAITING_ROOM', reqForConnectingHandler);
+    socket.on('REMOVE_AWAITER', (data) => {
+      const { amountOfAwaiters: amount } = data;
+      setAmoutOfAwaiters(amount);
+    });
     return () => {
       if (childs) {
         const arrOfChilds = Array.from(childs);
