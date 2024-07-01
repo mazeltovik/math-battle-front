@@ -47,7 +47,7 @@ export default function CreatePage() {
     null
   );
   const [openRoomCard, setOpenRoomCard] = useState(false);
-  const { userId, socketId } = useSocket();
+  const { userId } = useSocket();
   const { showErrorAlert, showWarningAlert } = useAlert();
   const { setOpenModal, setRollUp } = useModal();
   const navigate = useNavigate();
@@ -91,7 +91,6 @@ export default function CreatePage() {
     if (!roomConfig && name) {
       const socketRoomConfig = {
         userId,
-        socketId,
         name,
         time,
         difficulty,

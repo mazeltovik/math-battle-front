@@ -27,7 +27,7 @@ import approveConnection from '../../socket/events/approveConnection';
 import { socket } from '../../socket/socket';
 
 export default function AwaitersPage() {
-  const { socketId, userId } = useSocket();
+  const { userId } = useSocket();
   const [awaiters, setAwaiters] = useState<Awaiter[]>([]);
   const { setOpenModal, setRollUp } = useModal();
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ export default function AwaitersPage() {
     socket.on('GET_AWAITERS', getAwaitersHandler);
     socket.on('APPROVE_CONNECTION', approveConnectionHandler);
     socket.emit('GET_AWAITERS', {
-      userId: socketId,
+      userId,
     });
     return () => {
       socket.off('GET_AWAITERS', getAwaitersHandler);

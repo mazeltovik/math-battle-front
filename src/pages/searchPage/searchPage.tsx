@@ -41,10 +41,7 @@ export default function SearchPage() {
   const getRoomsHandler = useCallback(getRoomsCashed, []);
 
   //Memoize addCreatedRoom
-  const addCreatedRoomCashed = useMemo(
-    () => addCreatedRoom(userId, rooms, setRooms, socket),
-    []
-  );
+  const addCreatedRoomCashed = useMemo(() => addCreatedRoom(setRooms), []);
   const addCreatedRoomHandler = useCallback(addCreatedRoomCashed, []);
 
   //Memoize approveConnection

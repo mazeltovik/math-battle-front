@@ -16,7 +16,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 //Components
 
 //React
@@ -24,8 +24,10 @@ import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 //Hooks
 import useSidebar from '../../hooks/useSidebar';
+import useAlert from '../../hooks/useAlert';
 //Helpers
 import reqForConnecting from '../../socket/events/reqForConnecting';
+import leaveAwaitingRoom from '../../socket/events/leaveAwaitingRoom';
 //Handlers
 import activeSidebarHandler from '../../handlers/activeSidebar';
 import menuItemHandler from '../../handlers/menuItemHandler';
@@ -36,13 +38,24 @@ import { socket } from '../../socket/socket';
 export default function SidebarMenu({}: sidebarMenuTypes) {
   const location = useLocation();
   const { active, setActive } = useSidebar();
+  const { showWarningAlert } = useAlert();
   const [amoutOfAwaiters, setAmoutOfAwaiters] = useState(0);
   const menuParentRef = useRef<HTMLUListElement>(null);
+
+  //Memoize reqForConnecting
   const reqForConnectingCashed = useMemo(
-    () => reqForConnecting(setAmoutOfAwaiters),
+    () => reqForConnecting(setAmoutOfAwaiters, showWarningAlert),
     []
   );
   const reqForConnectingHandler = useCallback(reqForConnectingCashed, []);
+
+  //Memoize leaveAwaitingRoom
+  const leaveAwaitingRoomCashed = useMemo(
+    () => leaveAwaitingRoom(setAmoutOfAwaiters),
+    []
+  );
+  const leaveAwaitingRoomHandler = useCallback(leaveAwaitingRoomCashed, []);
+
   useEffect(() => {
     const { pathname } = location;
     const childs = menuParentRef.current?.children;
@@ -55,7 +68,7 @@ export default function SidebarMenu({}: sidebarMenuTypes) {
       });
     }
     socket.on('REQUEST_FOR_CONNECTING', reqForConnectingHandler);
-    socket.on('LEAVE_AWAITING_ROOM', reqForConnectingHandler);
+    socket.on('LEAVE_AWAITING_ROOM', leaveAwaitingRoomHandler);
     socket.on('REMOVE_AWAITER', (data) => {
       const { amountOfAwaiters: amount } = data;
       setAmoutOfAwaiters(amount);
@@ -70,7 +83,7 @@ export default function SidebarMenu({}: sidebarMenuTypes) {
         });
       }
       socket.off('REQUEST_FOR_CONNECTING', reqForConnectingHandler);
-      socket.off('LEAVE_AWAITING_ROOM', reqForConnectingHandler);
+      socket.off('LEAVE_AWAITING_ROOM', leaveAwaitingRoomHandler);
     };
   }, [location]);
   return (
@@ -119,7 +132,7 @@ export default function SidebarMenu({}: sidebarMenuTypes) {
           <NavLink to="/awaiters">
             <span className="icon">
               <Badge badgeContent={amoutOfAwaiters} color="secondary">
-                <MailIcon />
+                <GroupAddIcon />
               </Badge>
             </span>
             <span className="text">Awaiters</span>
