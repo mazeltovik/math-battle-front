@@ -9,6 +9,7 @@ import { Awaiter } from '../../socket/socketTypes';
 import Paper from '@mui/material/Paper';
 import { ThemeProvider } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
+import HomeIcon from '@mui/icons-material/Home';
 //Components
 import AwaiterCard from '../../components/awaiterCard/awaiterCard';
 //React
@@ -75,6 +76,39 @@ export default function AwaitersPage() {
               />
             );
           })}
+        </div>
+        <div className="tab">
+          <div className="menuToggle">+</div>
+          <div className="circularbg1"></div>
+          <div className="circularbg2"></div>
+          <div className="circular">
+            <ul className="circle">
+              <li>
+                <HomeIcon />
+              </li>
+              <li>
+                <HomeIcon />
+              </li>
+              <li>
+                <HomeIcon />
+              </li>
+            </ul>
+          </div>
+          {/* <ul className="menu">
+            <li>
+              <HomeIcon />
+            </li>
+            <li>
+              <HomeIcon />
+            </li>
+            <li></li>
+            <li>
+              <HomeIcon />
+            </li>
+            <li>
+              <HomeIcon />
+            </li>
+          </ul> */}
         </div>
       </Paper>
     </ThemeProvider>
