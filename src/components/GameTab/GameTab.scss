@@ -33,6 +33,20 @@
     color: #fff;
     font-size: 2.5em;
     transition: 1s ease-in-out;
+    .bell-border {
+      height: 59px; 
+      width: 59px;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid #7844E8!important;
+      animation-name: bord-pop;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      box-shadow: 2px 2px 5px #ccc, -2px -2px 5px #ccc;
+  }
     &:hover {
       transition: 0.3s ease-in-out;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -61,6 +75,7 @@
     transform-origin: top center;
     transition: 1s ease-in-out;
     opacity: 0;
+    pointer-events: none;
   }
   .circularbg1 {
     background: $clr-primary-dark;
@@ -80,6 +95,7 @@
   &.active .circularbg2 {
     transform: translateX(-50%) rotate(180deg);
     opacity: 1;
+    pointer-events: auto;
   }
   &.active .circularbg1,
   &.active .circularbg2 {
@@ -125,6 +141,11 @@
     height: 50vh;
     transition: transform .5s;
     transform: scaleY(0);
+
+    .close_chat{
+      margin-left: auto;
+      margin-right: 1rem;
+    }
     .chat_container{
       display: flex;
       flex-direction: column;
@@ -178,5 +199,20 @@
       transform: scaleY(1);
       // transition: 3s height ease-in-out;
     }
+  }
+}
+
+
+@keyframes bord-pop {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+      transform: translate(-50%, -50%) scale(1.9);
+      opacity: 0.1;
+  }
+  100% {
+      transform: translate(-50%, -50%) scale(1.9);
+      opacity: 0;
   }
 }

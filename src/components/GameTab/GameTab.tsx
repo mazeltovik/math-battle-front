@@ -12,6 +12,8 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import SendIcon from '@mui/icons-material/Send';
 import IconButton from '@mui/material/IconButton';
+import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
+import Badge from '@mui/material/Badge';
 //Components
 
 //React
@@ -23,28 +25,33 @@ import { useState, useRef } from 'react';
 //Handlers
 import activeGameTabHandler from '../../handlers/activeGameTab';
 import disableGameTabHandler from '../../handlers/disableGameTab';
+import closeChatTabHandler from '../../handlers/closeChatTab';
 
 export default function GameTab({}: GameTabTypes) {
-  const [activeTab, setActiveTab] = useState(true);
+  const [activeTab, setActiveTab] = useState(false);
   const [disableMenuToggle, setdisableMenuToggle] = useState(false);
-  const toggleRef = useRef<HTMLDivElement>(null);
   const chatRef = useRef<HTMLDivElement>(null);
   return (
     <div className={activeTab ? 'tab active' : 'tab'}>
-      <div className="chat active" ref={chatRef}>
+      <div className="chat" ref={chatRef}>
+        <div
+          className="close_chat"
+          onClick={closeChatTabHandler(setdisableMenuToggle, chatRef)}
+        >
+          <DisabledByDefaultIcon
+            sx={{
+              color: '#bcccdc',
+              cursor: 'pointer',
+              width: '2rem',
+              height: '2rem',
+              ':hover': {
+                color: '#bb2525',
+                transition: '.3s',
+              },
+            }}
+          />
+        </div>
         <div className="chat_container">
-          <div className="chat_bubble">
-            <p>Hello Alex, Im process engineer. I like games and movies</p>
-          </div>
-          <div className="chat_bubble host">
-            <p>Hello Nikita, Im process engineer. I like games and movies</p>
-          </div>
-          <div className="chat_bubble">
-            <p>Hello Alex, Im process engineer. I like games and movies</p>
-          </div>
-          <div className="chat_bubble host">
-            <p>Hello Nikita, Im process engineer. I like games and movies</p>
-          </div>
           <div className="chat_bubble">
             <p>Hello Alex, Im process engineer. I like games and movies</p>
           </div>
@@ -73,10 +80,9 @@ export default function GameTab({}: GameTabTypes) {
       </div>
       <div
         className={disableMenuToggle ? 'menuToggle disable' : 'menuToggle'}
-        ref={toggleRef}
         onClick={activeGameTabHandler(setActiveTab)}
       >
-        +
+        {!activeTab && <div className="bell-border"></div>}+
       </div>
       <div className="circularbg1"></div>
       <div className="circularbg2"></div>
@@ -90,16 +96,17 @@ export default function GameTab({}: GameTabTypes) {
           )}
         >
           <li className="chatIcon">
-            <ChatIcon
-              sx={{
-                rotate: '180deg',
-                opacity: '0.5',
-                ':hover': {
-                  opacity: '1',
-                  transition: '.3s ease-in-out',
-                },
-              }}
-            />
+            <Badge badgeContent={0} color="secondary" sx={{ rotate: '180deg' }}>
+              <ChatIcon
+                sx={{
+                  opacity: '0.5',
+                  ':hover': {
+                    opacity: '1',
+                    transition: '.3s ease-in-out',
+                  },
+                }}
+              />
+            </Badge>
           </li>
           <li className="leaveGameIcon">
             <ExitToAppIcon
