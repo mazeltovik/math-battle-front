@@ -1,7 +1,7 @@
 export default function activeGameTabHandler(
-  toggleRef: React.RefObject<HTMLDivElement>
+  setActiveTab: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   return () => {
-    toggleRef.current?.parentElement?.classList.toggle('active');
+    setActiveTab((active) => !active);
   };
 }

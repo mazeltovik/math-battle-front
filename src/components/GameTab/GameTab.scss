@@ -1,12 +1,21 @@
 @import '../../main';
 
 .tab {
-  margin-top: 10rem;
+  margin-top: 20rem;
   position: relative;
-  width: 200px;
-  height: 80px;
+  width: 100%;
+  max-height: 0;
   z-index: 1;
   user-select: none;
+  transition: 3s max-height ease-in-out;
+  background: white;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  // &.sp{
+  //   max-height: 300px;
+  //   transition: 3s max-height ease-in-out;
+  // }
   .menuToggle {
     position: absolute;
     top: -30px;
@@ -14,7 +23,7 @@
     transform: translateX((-50%));
     width: 60px;
     height: 60px;
-    background: #ff3b7e;
+    background: $clr-grey-3;
     z-index: 1;
     border-radius: 50%;
     cursor: pointer;
@@ -27,6 +36,14 @@
     &:hover {
       transition: 0.3s ease-in-out;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    &.disable{
+      // transition: 1s ease-in-out;
+      // transform: scale(0);
+      pointer-events: none;
+      width: 0;
+      height: 0;
+      opacity: 0;
     }
   }
 
@@ -90,5 +107,76 @@
 
   ul.circle li:nth-child(3) {
     transform: translate(-50px, -15px);
+  }
+  .chat{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 5px;
+    position: absolute;
+    width: 100%;
+    padding: 2rem 4rem;
+    // height: 0px;
+    // height: 600px;
+    max-height: 600px;
+    background: white;
+    // transition: 3s height ease-in-out;
+    transform-origin: 0 100%;
+    height: 50vh;
+    transition: transform .5s;
+    transform: scaleY(0);
+    .chat_container{
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      overflow: auto;
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+      &::-webkit-scrollbar-track {
+        border-radius: 8px;
+        background-color: #e7e7e7;
+        border: 1px solid #cacaca;
+        cursor: pointer;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        background-color: $main-bg;
+      }
+      .chat_bubble{
+        max-width: 60%;
+        width: max-content;
+        background: $clr-grey-8;
+        padding: 1rem;
+        border-radius: 5px;
+        overflow-wrap: break-word;
+        &.host{
+          margin-left: auto;
+          margin-right: 1rem;
+          background: $clr-primary-hover;
+        }
+      }
+    }
+    .submit_container{
+      margin-top: 1rem;
+      .send_form{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        .textarea{
+          width: 100%;
+          resize: none;
+          padding: 0.5rem 1rem 0 1rem;
+          &::-webkit-scrollbar {
+            width: 1rem;
+          }
+        }
+      }
+    }
+    &.active{
+      transform: scaleY(1);
+      // transition: 3s height ease-in-out;
+    }
   }
 }
