@@ -14,6 +14,7 @@ import AuthPage from './pages/authPage/authPage';
 import SearchPage from './pages/searchPage/searchPage';
 import CreatePage from './pages/createPage/createPage';
 import AwaitersPage from './pages/awaitersPage/awaitersPage';
+import RoomPage from './pages/roomPage/roomPage';
 
 import CountdownTimer from './components/countdownTimer/countdownTimer';
 
@@ -100,7 +101,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <p>room Id</p>,
+        element: <RoomPage />,
       },
     ],
   },

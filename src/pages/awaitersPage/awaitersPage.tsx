@@ -12,7 +12,6 @@ import Stack from '@mui/material/Stack';
 
 //Components
 import AwaiterCard from '../../components/awaiterCard/awaiterCard';
-import GameTab from '../../components/GameTab/GameTab';
 //React
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -78,7 +77,6 @@ export default function AwaitersPage() {
             );
           })}
         </div>
-        <GameTab />
       </Paper>
     </ThemeProvider>
   );
