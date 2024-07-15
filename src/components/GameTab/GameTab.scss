@@ -1,26 +1,27 @@
 @import '../../main';
 
 .tab {
-  margin-top: 20rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  // flex-direction: row;
+  // flex-wrap: wrap;
+  // margin: 0px auto;
   position: relative;
   width: 100%;
-  max-height: 0;
+  padding-bottom: 5px;
+  // bottom: 40px;
+  // height: 35%;
+  // max-height: 0;
   z-index: 1;
   user-select: none;
-  transition: 3s max-height ease-in-out;
-  background: white;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // &.sp{
-  //   max-height: 300px;
-  //   transition: 3s max-height ease-in-out;
-  // }
+  // transition: 3s max-height ease-in-out;
+  // background: white;
   .menuToggle {
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX((-50%));
+    position: relative;
+    top: -50px;
+  //   left: 50%;
+    // transform: translateX((-50%));
     width: 60px;
     height: 60px;
     background: $clr-grey-3;
@@ -58,6 +59,7 @@
       width: 0;
       height: 0;
       opacity: 0;
+      // display: none;
     }
   }
 
@@ -65,6 +67,7 @@
   .circularbg1,
   .circularbg2 {
     position: absolute;
+    // top:25px;
     left: 50%;
     transform: translateX(-50%);
     width: 160px;
@@ -88,7 +91,7 @@
     transition-delay: 0.2s;
   }
   &.active .menuToggle {
-    transform: translateX(-50%) rotate(225deg);
+    transform: rotate(225deg);
   }
   &.active .circular,
   &.active .circularbg1,
@@ -141,7 +144,6 @@
     height: 50vh;
     transition: transform .5s;
     transform: scaleY(0);
-
     .close_chat{
       margin-left: auto;
       margin-right: 1rem;
@@ -214,5 +216,19 @@
   100% {
       transform: translate(-50%, -50%) scale(1.9);
       opacity: 0;
+  }
+}
+
+
+@media (min-width: 320px) and (max-width: 1015px) {
+  .tab{
+    .chat{
+      padding: 2rem 10px;
+      .chat_container{
+        .chat_bubble{
+          max-width: 80%;
+      }
+    }
+  }
   }
 }
