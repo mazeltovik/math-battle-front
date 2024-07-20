@@ -3,7 +3,7 @@ import './GameTab.scss';
 
 //Types
 import { GameTabTypes } from './GameTabTypes';
-
+import { ReciveSendMessage } from '../../socket/socketTypes';
 //Images
 
 //MUI
@@ -17,7 +17,7 @@ import Badge from '@mui/material/Badge';
 //Components
 
 //React
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 //Hooks
 
 //Helpers
@@ -26,11 +26,24 @@ import { useState, useRef } from 'react';
 import activeGameTabHandler from '../../handlers/activeGameTab';
 import disableGameTabHandler from '../../handlers/disableGameTab';
 import closeChatTabHandler from '../../handlers/closeChatTab';
+import sendMessage from '../../handlers/sendMessage';
+import getMessage from '../../socket/events/getMessage';
 
-export default function GameTab({}: GameTabTypes) {
+export default function GameTab({ roomId, socketId, socket }: GameTabTypes) {
   const [activeTab, setActiveTab] = useState(false);
   const [disableMenuToggle, setdisableMenuToggle] = useState(false);
+  const [messages, setMessages] = useState<ReciveSendMessage[]>([]);
   const chatRef = useRef<HTMLDivElement>(null);
+  const messageRef = useRef<HTMLTextAreaElement>(null);
+  //Event listeners
+  const getMessageCashed = useMemo(() => getMessage(messages, setMessages), []);
+  const getMessageHandler = useCallback(getMessageCashed, []);
+  useEffect(() => {
+    socket.on('SEND_MESSAGE', getMessageHandler);
+    return () => {
+      socket.off('SEND_MESSAGE', getMessageHandler);
+    };
+  }, []);
   return (
     <div className={activeTab ? 'tab active' : 'tab'}>
       <div className="chat" ref={chatRef}>
@@ -52,16 +65,35 @@ export default function GameTab({}: GameTabTypes) {
           />
         </div>
         <div className="chat_container">
-          <div className="chat_bubble">
+          {messages.map((message) => {
+            if (message.sender == socketId) {
+              return (
+                <div key={message.messageId} className="chat_bubble host">
+                  <p>{message.message}</p>
+                </div>
+              );
+            } else {
+              return (
+                <div key={message.messageId} className="chat_bubble">
+                  <p>{message.message}</p>
+                </div>
+              );
+            }
+          })}
+          {/* <div className="chat_bubble">
             <p>Hello Alex, Im process engineer. I like games and movies</p>
           </div>
           <div className="chat_bubble host">
             <p>Hello Nikita, Im process engineer. I like games and movies</p>
-          </div>
+          </div> */}
         </div>
         <div className="submit_container">
           <div className="send_form">
-            <textarea placeholder="Message" className="textarea"></textarea>
+            <textarea
+              placeholder="Message"
+              className="textarea"
+              ref={messageRef}
+            ></textarea>
             <IconButton
               color="primary"
               aria-label="send message"
@@ -72,6 +104,7 @@ export default function GameTab({}: GameTabTypes) {
                   transition: '.3s',
                 },
               }}
+              onClick={sendMessage(socketId, socket, roomId, messageRef)}
             >
               <SendIcon sx={{ color: 'white' }} />
             </IconButton>

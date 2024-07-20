@@ -13,10 +13,11 @@ import Paper from '@mui/material/Paper';
 import { ThemeProvider } from '@mui/material/styles';
 //React
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 //Hooks
 import useSocket from '../../hooks/useSocket';
 import useModal from '../../hooks/useModal';
+
 //Helpers
 import theme from '../../helpers/authTheme';
 //Handlers
@@ -25,6 +26,9 @@ import theme from '../../helpers/authTheme';
 import { socket } from '../../socket/socket';
 
 export default function RoomPage() {
+  const { pathname } = useLocation();
+  const roomId = pathname.split('/')[2];
+  const { socketId } = useSocket();
   return (
     <ThemeProvider theme={theme}>
       <Paper
@@ -50,7 +54,7 @@ export default function RoomPage() {
             /> */}
           </div>
           <div className="gameplay_container">Gameplay</div>
-          <GameTab />
+          <GameTab socketId={socketId} roomId={roomId} socket={socket} />
         </div>
       </Paper>
     </ThemeProvider>
