@@ -13,6 +13,7 @@ export default function sendMessage(
     const message = messageRef.current?.value;
     if (message && socketId) {
       socket.emit('SEND_MESSAGE', { socketId, message, roomId });
+      messageRef.current.value = '';
     }
   };
 }

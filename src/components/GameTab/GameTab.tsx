@@ -32,11 +32,26 @@ import getMessage from '../../socket/events/getMessage';
 export default function GameTab({ roomId, socketId, socket }: GameTabTypes) {
   const [activeTab, setActiveTab] = useState(false);
   const [disableMenuToggle, setdisableMenuToggle] = useState(false);
+  const [activeChat, setActiveChat] = useState(false);
   const [messages, setMessages] = useState<ReciveSendMessage[]>([]);
+  const [newMessage, setNewMessage] = useState(false);
+  const [amountMessages, setAmountMessages] = useState(0);
   const chatRef = useRef<HTMLDivElement>(null);
+  const chatContainer = useRef<HTMLDivElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
   //Event listeners
-  const getMessageCashed = useMemo(() => getMessage(messages, setMessages), []);
+  const getMessageCashed = useMemo(
+    () =>
+      getMessage(
+        socketId,
+        activeChat,
+        setMessages,
+        setNewMessage,
+        setAmountMessages,
+        chatContainer
+      ),
+    []
+  );
   const getMessageHandler = useCallback(getMessageCashed, []);
   useEffect(() => {
     socket.on('SEND_MESSAGE', getMessageHandler);
@@ -49,7 +64,13 @@ export default function GameTab({ roomId, socketId, socket }: GameTabTypes) {
       <div className="chat" ref={chatRef}>
         <div
           className="close_chat"
-          onClick={closeChatTabHandler(setdisableMenuToggle, chatRef)}
+          onClick={closeChatTabHandler(
+            setdisableMenuToggle,
+            setActiveChat,
+            setNewMessage,
+            setAmountMessages,
+            chatRef
+          )}
         >
           <DisabledByDefaultIcon
             sx={{
@@ -64,7 +85,7 @@ export default function GameTab({ roomId, socketId, socket }: GameTabTypes) {
             }}
           />
         </div>
-        <div className="chat_container">
+        <div className="chat_container" ref={chatContainer}>
           {messages.map((message) => {
             if (message.sender == socketId) {
               return (
@@ -80,12 +101,6 @@ export default function GameTab({ roomId, socketId, socket }: GameTabTypes) {
               );
             }
           })}
-          {/* <div className="chat_bubble">
-            <p>Hello Alex, Im process engineer. I like games and movies</p>
-          </div>
-          <div className="chat_bubble host">
-            <p>Hello Nikita, Im process engineer. I like games and movies</p>
-          </div> */}
         </div>
         <div className="submit_container">
           <div className="send_form">
@@ -115,7 +130,7 @@ export default function GameTab({ roomId, socketId, socket }: GameTabTypes) {
         className={disableMenuToggle ? 'menuToggle disable' : 'menuToggle'}
         onClick={activeGameTabHandler(setActiveTab)}
       >
-        {!activeTab && <div className="bell-border"></div>}+
+        {!activeTab && newMessage && <div className="bell-border"></div>}+
       </div>
       <div className="circularbg1"></div>
       <div className="circularbg2"></div>
@@ -125,11 +140,18 @@ export default function GameTab({ roomId, socketId, socket }: GameTabTypes) {
           onClick={disableGameTabHandler(
             setActiveTab,
             setdisableMenuToggle,
+            setNewMessage,
+            setAmountMessages,
+            setActiveChat,
             chatRef
           )}
         >
           <li className="chatIcon">
-            <Badge badgeContent={0} color="secondary" sx={{ rotate: '180deg' }}>
+            <Badge
+              badgeContent={amountMessages}
+              color="secondary"
+              sx={{ rotate: '180deg' }}
+            >
               <ChatIcon
                 sx={{
                   opacity: '0.5',
